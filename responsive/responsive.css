@@ -1,0 +1,37 @@
+.software{
+    width: 433px;
+    height: 580px;
+    background:url(software.png) 0 0px;
+}
+
+@media screen and (max-width:1200px){
+    .software{
+    width: 433px;
+    height: 580px;
+    background:url(software.png) -435px 0px;
+    }
+}
+
+@media screen and (max-width:1000px){
+    .software{
+    width: 333px;
+    height: 580px;
+    background:url(software.png) -870px 0px;
+    }
+}
+
+
+@media screen and (max-width:800px){
+    .software{
+    width: 712px;
+    height: 624px;
+    background:url(software.png) 0 -592px;
+    }
+}
+
+@media screen and (max-width:600px){
+    .software{
+    width: 480px;
+    height: 624px;
+    background:url(software.png) -725px -592px;
+}
