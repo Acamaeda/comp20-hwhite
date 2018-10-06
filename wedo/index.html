@@ -14,7 +14,41 @@
 <div id="lyrics"></div>
 
 <script>
-	// Complete this section and create a CSS file named style.css
+    var v = document.getElementsByTagName("video")[0];
+    var lyrics = document.getElementById("lyrics");
+
+    var annotate = function()
+    {
+        var time = v.currentTime;
+        if (time > 45)
+            lyrics.innerText = "";
+        else if (time > 37.8)
+            lyrics.innerText = "We do! We do!";
+        else if (time > 35.8)
+            lyrics.innerText = "Who rigs every Oscar night?";
+        else if (time > 33.6)
+            lyrics.innerText = "Who robs cavefish of their sight?";
+        else if (time > 29.4)
+            lyrics.innerText = "We do, we do!";
+        else if (time > 25)
+            lyrics.innerText = "Who makes Steve Gutenberg a star?";
+        else if (time > 20.9)
+            lyrics.innerText = "Who holds back the electric car?";
+        else if (time > 16.5)
+            lyrics.innerText = "We do, we do!";
+        else if (time > 14.5)
+            lyrics.innerText = "Who keeps the Martians under wraps?";
+        else if (time > 12.4)
+            lyrics.innerText = "Who leaves Atlantis off the maps?";
+        else if (time > 8)
+            lyrics.innerText = "We do, we do!";
+        else if (time > 6)
+            lyrics.innerText = "Who keeps the metric system down?";
+        else if (time > 3.95)
+            lyrics.innerText = "Who controls the British crown?";
+    }
+    v.addEventListener("timeupdate", annotate);
+
 </script>
 </body>
 </html>	
