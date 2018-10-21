@@ -138,39 +138,71 @@ function initMap() {
     
     var iconDumb = 'station.png';
     for (stop in stops){
-        var marker = new google.maps.Marker({position: stops[stop].loc, map: map, icon: iconDumb});
+        var marker = new google.maps.Marker({position: stops[stop].loc, map:     map, icon: iconDumb});
         
     }
 
-var firstline = new google.maps.Polyline({
-    path: [
-        stops["place-alfcl"].loc, stops["place-davis"].loc,
-        stops["place-portr"].loc, stops["place-harsq"].loc,
-        stops["place-cntsq"].loc, stops["place-knncl"].loc,
-        stops["place-chmnl"].loc, stops["place-pktrm"].loc, 
-        stops["place-dwnxg"].loc, stops["place-sstat"].loc, 
-        stops["place-brdwy"].loc, stops["place-andrw"].loc, 
-        stops["place-jfk"].loc, stops["place-nqncy"].loc, 
-        stops["place-wlsta"].loc, stops["place-qnctr"].loc, 
-        stops["place-qamnl"].loc, stops["place-brntn"].loc
-    ],
-    geodesic: true,
-    strokeColor: '#FF0000',
-    strokeOpacity: 1.0,
-    strokeWeight: 2
-});
-firstline.setMap(map);
+    var firstline = new google.maps.Polyline({
+        path: [
+            stops["place-alfcl"].loc, stops["place-davis"].loc,
+            stops["place-portr"].loc, stops["place-harsq"].loc,
+            stops["place-cntsq"].loc, stops["place-knncl"].loc,
+            stops["place-chmnl"].loc, stops["place-pktrm"].loc, 
+            stops["place-dwnxg"].loc, stops["place-sstat"].loc, 
+            stops["place-brdwy"].loc, stops["place-andrw"].loc, 
+            stops["place-jfk"].loc, stops["place-nqncy"].loc, 
+            stops["place-wlsta"].loc, stops["place-qnctr"].loc, 
+            stops["place-qamnl"].loc, stops["place-brntn"].loc
+        ],
+        geodesic: true,
+        strokeColor: '#FF0000',
+        strokeOpacity: 1.0,
+        strokeWeight: 4
+    });
+    firstline.setMap(map);
 
-var otherline = new google.maps.Polyline({
-    path: [
-        stops["place-jfk"].loc, stops["place-shmnl"].loc, 
-        stops["place-fldcr"].loc, stops["place-smmnl"].loc, 
-        stops["place-asmnl"].loc
-    ],
-    geodesic: true,
-    strokeColor: '#FF0000',
-    strokeOpacity: 1.0,
-    strokeWeight: 2
-});
-otherline.setMap(map);
+    var otherline = new google.maps.Polyline({
+        path: [
+            stops["place-jfk"].loc, stops["place-shmnl"].loc, 
+            stops["place-fldcr"].loc, stops["place-smmnl"].loc, 
+            stops["place-asmnl"].loc
+        ],
+        geodesic: true,
+        strokeColor: '#FF0000',
+        strokeOpacity: 1.0,
+        strokeWeight: 4
+    });
+    otherline.setMap(map);
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        var pos = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+
+        
+        map.setCenter(pos);
+      }, function() {
+        console.log("ERROR");
+      });
+    } else {
+            console.log("ERROR");
+
+    }
 }
+
+function makeRequest(){
+    var request = new XMLHttpRequest();
+    
+    request.open("GET", "", true);
+    
+    request.onreadystatechange = function(){
+        if (request.readyState == 4){
+            console.log(request.statusText);
+        }
+    }   
+    request.send();
+}
+
+makeRequest();
