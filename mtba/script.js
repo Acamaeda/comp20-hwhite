@@ -135,7 +135,7 @@ function initMap() {
         styles: noPoi
     });
     
-    var info = new google.maps.InfoWindow({
+    info = new google.maps.InfoWindow({
                 content: "<p>Loading...</p>"
     });
     var iconDumb = 'station.png';
@@ -143,7 +143,14 @@ function initMap() {
         stops[stop].marker = new google.maps.Marker({position: stops[stop].loc, map:     map, icon: iconDumb});
         stops[stop].marker.id = stops[stop].id;
         stops[stop].marker.addListener('click', function() {
-            info.content = stops[this.id].name;
+            info.setContent('<div id="content">'+
+            '<div id="station">'+
+            '<h1 id="firstHeading" class="firstHeading">' + stops[this.id].name + '</h1>'+
+            '<div id="bodyContent">'+
+            '<p>Blah ' +
+            '</p>'+
+            '</div>'+
+            '</div>');
             info.open(map, this);
         });
         
@@ -249,7 +256,7 @@ function makeRequest(id){
     
     request.onreadystatechange = function(){
         if (request.readyState == 4){
-            console.log(request.statusText);
+            
         }
     }   
     request.send();
