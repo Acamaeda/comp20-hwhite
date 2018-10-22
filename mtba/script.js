@@ -197,6 +197,8 @@ function initMap() {
                 }
             }
             map.setCenter(pos);
+            
+            // Add line to nearest station
             var nearline = new google.maps.Polyline({
                 path: [pos, nearest.loc],
                 geodesic: true,
@@ -206,11 +208,31 @@ function initMap() {
             });
             nearline.setMap(map);
             var marker = new google.maps.Marker({position: pos, map: map});
+            
+            // Add info window
+            var contentString = '<div id="content">'+
+            '<div id="youarehere">'+
+            '</div>'+
+            '<h1 id="firstHeading" class="firstHeading">You are here</h1>'+
+            '<div id="bodyContent">'+
+            '<p>Nearest station: ' +
+            nearest.name +
+            '</p>'+
+            '</div>'+
+            '</div>';
+
+            var yourinfo = new google.maps.InfoWindow({
+                content: contentString
+            });
+
+            
+            marker.addListener('click', function() {
+                yourinfo.open(map, marker);
+            });
           }, function() {
           });
         //} , 10000);
     }
-
 }
 
 function makeRequest(id){
