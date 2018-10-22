@@ -173,22 +173,48 @@ function initMap() {
         strokeWeight: 4
     });
     otherline.setMap(map);
-
+    
+    
+    // Geolocating
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function(position) {
-        var pos = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude
-        };
-
-        
-        map.setCenter(pos);
-      }, function() {
-        console.log("ERROR");
-      });
-    } else {
+        //setInterval(function(){ // Keeps asking for position
+          navigator.geolocation.getCurrentPosition(function(position) {
+            var pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+            
+            // Find nearest stop
+            var shortest = 800;
+            var nearest = stops["place-sstat"];
+            for (stop in stops)
+            {
+                var loc = (stops[stop].loc);
+                var dist = Math.sqrt(Math.pow(pos.lat - loc.lat, 2) + Math.pow(pos.lng - loc.lng, 2));
+                if (dist < shortest){
+                    shortest = dist;
+                    nearest = stops[stop];
+                }
+            }
+            console.log(nearest.name);
+            map.setCenter(pos);
+            var nearline = new google.maps.Polyline({
+                path: [pos, nearest.loc],
+                geodesic: true,
+                strokeColor: '#555555',
+                strokeOpacity: 1.0,
+                strokeWeight: 6
+            });
+            nearline.setMap(map);
+            console.log("?");
+            var marker = new google.maps.Marker({position: pos, map: map});
+          }, function() {
             console.log("ERROR");
-
+          });
+        //} , 10000);
+    }
+    else {
+                console.log("ERROR");
     }
 }
 
