@@ -135,10 +135,17 @@ function initMap() {
         styles: noPoi
     });
     
-    
+    var info = new google.maps.InfoWindow({
+                content: "<p>Loading...</p>"
+    });
     var iconDumb = 'station.png';
     for (stop in stops){
-        var marker = new google.maps.Marker({position: stops[stop].loc, map:     map, icon: iconDumb});
+        stops[stop].marker = new google.maps.Marker({position: stops[stop].loc, map:     map, icon: iconDumb});
+        stops[stop].marker.id = stops[stop].id;
+        stops[stop].marker.addListener('click', function() {
+            info.content = stops[this.id].name;
+            info.open(map, this);
+        });
         
     }
 
