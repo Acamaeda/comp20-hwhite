@@ -196,7 +196,6 @@ function initMap() {
                     nearest = stops[stop];
                 }
             }
-            console.log(nearest.name);
             map.setCenter(pos);
             var nearline = new google.maps.Polyline({
                 path: [pos, nearest.loc],
@@ -206,22 +205,18 @@ function initMap() {
                 strokeWeight: 6
             });
             nearline.setMap(map);
-            console.log("?");
             var marker = new google.maps.Marker({position: pos, map: map});
           }, function() {
-            console.log("ERROR");
           });
         //} , 10000);
     }
-    else {
-                console.log("ERROR");
-    }
+
 }
 
-function makeRequest(){
+function makeRequest(id){
     var request = new XMLHttpRequest();
     
-    request.open("GET", "", true);
+    request.open("GET", "https://chicken-of-the-sea.herokuapp.com/redline/schedule.json?stop_id=" + id, true);
     
     request.onreadystatechange = function(){
         if (request.readyState == 4){
@@ -231,4 +226,4 @@ function makeRequest(){
     request.send();
 }
 
-makeRequest();
+makeRequest("place-sstat");
