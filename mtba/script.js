@@ -143,14 +143,9 @@ function initMap() {
         stops[stop].marker = new google.maps.Marker({position: stops[stop].loc, map:     map, icon: iconDumb});
         stops[stop].marker.id = stops[stop].id;
         stops[stop].marker.addListener('click', function() {
-            info.setContent('<div id="content">'+
-            '<div id="station">'+
-            '<h1 id="firstHeading" class="firstHeading">' + stops[this.id].name + '</h1>'+
-            '<div id="bodyContent">'+
-            '<p>Blah ' +
-            '</p>'+
-            '</div>'+
-            '</div>');
+            info.setContent("<p>Loading...</p>");
+
+            makeRequest(this.id);
             info.open(map, this);
         });
         
@@ -251,12 +246,26 @@ function initMap() {
 
 function makeRequest(id){
     var request = new XMLHttpRequest();
-    
+    request.id = id;
     request.open("GET", "https://chicken-of-the-sea.herokuapp.com/redline/schedule.json?stop_id=" + id, true);
     
     request.onreadystatechange = function(){
         if (request.readyState == 4){
+             schedule = JSON.parse(this.responseText);
+            info.setContent('<div id="content">'+
+            '<div id="station">'+
+            '<h1 id="firstHeading" class="firstHeading">' + stops[this.id].name + '</h1>'+
+            '<div id="bodyContent">');
+
+            for (num in schedule.data)
+            {
+                var attributes = schedule.data[num].attributes;
+                var time = attributes.arrival_time.substring(11, 19);
+                var dir = (attributes.direction_id) ? "Northbound: " : "Southbound: ";   
+                info.setContent(info.content + "<p>" + dir + time + "</p>");
+            }
             
+            info.setContent(info.content + '</div></div>');
         }
     }   
     request.send();
