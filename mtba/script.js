@@ -251,24 +251,38 @@ function makeRequest(id){
     
     request.onreadystatechange = function(){
         if (request.readyState == 4){
-             schedule = JSON.parse(this.responseText);
+            schedule = JSON.parse(this.responseText);
             info.setContent('<div id="content">'+
             '<div id="station">'+
             '<h1 id="firstHeading" class="firstHeading">' + stops[this.id].name + '</h1>'+
             '<div id="bodyContent">');
+            var count = 0;
 
             for (num in schedule.data)
             {
+
                 var attributes = schedule.data[num].attributes;
-                var time = attributes.arrival_time.substring(11, 19);
-                var dir = (attributes.direction_id) ? "Northbound: " : "Southbound: ";   
-                info.setContent(info.content + "<p>" + dir + time + "</p>");
+                if (attributes.arrival_time != null)
+                {
+                    count ++;
+                    var hour = attributes.arrival_time.substring(11, 13);
+                    var time = attributes.arrival_time.substring(13, 19);
+                    var dir = (attributes.direction_id) ? "Northbound: " : "Southbound: ";   
+                    var m = " AM";
+                    if (hour == 0) hour = 12;
+                    if (hour > 12)
+                    {
+                        hour -= 12;
+                        m = " PM";
+                    }
+                    info.setContent(info.content + "<p>" + dir + hour + time + m + "</p>");
+                }
             }
+            if (count == 0) info.setContent(info.content + "<p>No data</p>");
+
             
             info.setContent(info.content + '</div></div>');
         }
     }   
     request.send();
 }
-
-makeRequest("place-sstat");
