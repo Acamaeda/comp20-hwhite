@@ -11,22 +11,31 @@
     <script>
         // All messages stored in one big string because I'm lazy
         var text = window.localStorage.getItem("logs");
+        if (text == null) text = "";
         updateLog = function() {
-            $('#log').innerHTML = "<p>" + text + "</p>";
+            $('#log').html("<p>" + text + "</p>");
 
         }
         
+        updateText = function() {
+            text = $('input').val() + "\n" + text;
+
+        }        
         $(document).ready(function() {
             updateLog();
-            
+            $('input').keyup(function(e){
+                    console.log(e.keyCode + " ");    ///////////////////////
+
+                if(e.keyCode == 13)
+                    {
+                        updateText($('input').val());
+                        window.localStorage.setItem("logs", text);
+                        updateLog();
+                    }
+            });
         });
         
-        $('input').submit(function(eventObject) {
-            text = $('input').val() + "\n" + text;
-            window.localStorage.setItem("logs", text);
-            updateLog();
-
-        });
+        
     </script>
 </head>
 
