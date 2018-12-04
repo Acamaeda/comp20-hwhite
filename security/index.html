@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Security</title>
+</head>
+
+<body>
+    <h1>Security thing</h1>
+    <h3>Introduction</h3>
+    <p>The product in question is a web server and database that stores scores for the game 2048 and retrieve high scores of several types.</p>
+
+    <h3>Methodology</h3>
+    <p>The first method used was to use curl to submit problematic data.</p>
+    <p>Second, I tried to flood the page with requests, but it didn't work because it almost crashed my VM.</p>
+    <p>I also attempted to use Burp but the scan feature is paid only and I'm too tired to figure out the rest.</p>
+
+    <h3>Abstract of findings</h3>
+    <p>Hackers can insert hostile scripts into the webpages through the submissions.</p>
+
+    <h3>Issues found</h3>
+
+    <p>CORS Issue</p>
+    <p>Moderate</p>
+    <p>I submitted illegitimate scores with curl.</p>
+    <p>Your CORS is set up to accept requests from all sites. You should set it to only accept requests from the site that should be accessing it.</p>
+
+    <p>Unsanitized data submissions.</p>
+    <p>High severity, anyone can easily insert harmful code and it is a common vulnerability.</p>
+    <p>I submitted a score with a script to set the page background to yellow, and the scores page background is now yellow</p>
+    <p>This can be resolved by sanatizing your inputs, replacing \< and \> with \&lt and \&gt respectively. Further attacks are possible without these symbols via "jsfuck", so look into that as well.</p>
+
+    <h3>Conclusion</h3>
+    <p>Consider the future. It will exist. It will probably cost money to buy food and stuff to survive.</p>
+
+    <h3>References</h3>
+    <img src = "refrance.png">
+    <b><p><font face = "Comic sans MS" size = 13px><a href = "https://www.homestuck.com/sweet-bro-and-hella-jeff/38">"THIS IS WHAT THE REFRANCE"</a></font></p>
+        <font face = "Comic sans MS" size = 1px><p>the sbahj ruse... was a distaction</p>
+            <p> Serously, I'm not sure even</p></font></b>
+</body>
+</html>

